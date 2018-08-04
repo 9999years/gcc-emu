@@ -1,0 +1,7 @@
+[package]
+name = "gcc-emu"
+version = "0.1.0"
+authors = ["Rebecca Turner <637275@gmail.com>"]
+
+[dependencies]
+regex = "1"
