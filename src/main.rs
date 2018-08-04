@@ -12,13 +12,13 @@ fn man(cmd: &str) -> String {
 }
 
 // returns arguments listed in the man page for `cmd`
-fn args<'a>(cmd: &'a str) -> Vec<&str> {
+fn args(cmd: &str) -> Vec<&str> {
     // an argument is space, a dash, alphanumerics, and space
     let arg_re = Regex::new("\\s-[[:alnum:]-]\\s").unwrap();
     // get the man page text
     let man_page: String = man(cmd);
     // collect arguments in the man page into a vec and return them
-    arg_re.find_iter(&mut man_page).map(
+    arg_re.find_iter(&man_page).map(
         |m| m.as_str()
         ).collect::<Vec<&str>>()
 }
