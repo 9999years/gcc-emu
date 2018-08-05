@@ -1,0 +1,31 @@
+[names]
+file    = "filenames.txt"
+folders = "foldernames.txt"
+var     = "varnames.txt"
+
+[extensions]
+source = [
+	".c",
+	".cpp",
+	# borrowed from gcc:
+	"mod", "bf", "vms", "f95", "pdf", "el", "v1", "eh", "bin", "svg", "m4",
+	"txh", "gcj", "rc", "686", "ml", "y", "sub", "h", "png", "cgi", "msc",
+	"cc", "src", "bat", "f08", "ver", "map", "mms", "bor", "obj", "ptr",
+	"xml", "ac", "S", "gif", "0", "tex", "rst", "chm", "exp", "pm", "rfg",
+	"pt", "ada", "F90", "inc", "mk", "11", "tpl", "emx", "asm", "sml",
+	"cpp", "tab", "hh", "tcc", "mak", "sng", "s", "dat", "law", "gdb", "c",
+	"two", "TXT", "a", "in", "tar", "C", "com", "f03", "elf", "jit", "adb",
+	"gox", "m", "F", "H", "bob", "md5", "Hs", "dir", "pup", "LIB", "awk",
+	"def", "abi", "sty", "dj2", "hs", "pas", "sym", "mm", "tgt", "f90",
+	"txt", "tst", "imp", "ads", "lib", "py", "10", "cs", "hpp", "gz",
+	"qpg", "aw", "dot", "pk", "gcc", "ptx", "gb", "log", "zip", "go",
+	"vim", "md", "i", "1", "sas", "crt", "ld", "out", "3", "raw", "pd",
+	"pkg", "bz2", "g95", "x", "os2", "opt", "dfs", "ns", "pot", "f", "dg",
+	"rot", "adt", "rtl", "l", "pl", "dep", "am", "tc", "c++", "po", "ii",
+	"pe", "toy", "gpr", "sln", "lst", "ext", "sh", "css"
+	]
+
+bin = [
+	".o"
+]
+

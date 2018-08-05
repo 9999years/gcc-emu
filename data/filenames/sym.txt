@@ -1,0 +1,3 @@
+libcp1plugin
+libcc1plugin
+libcc

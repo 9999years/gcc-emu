@@ -1,0 +1,13 @@
+pclinetest
+asm-support-darwin
+asm_mips64x
+environment-fail
+asm_s390x
+asm_amd64x
+asm_ppc64x
+p
+asm_
+mips-abi
+asm_arm
+asm
+asm_mipsx

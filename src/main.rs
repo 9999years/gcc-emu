@@ -2,7 +2,19 @@ extern crate regex;
 
 use std::process::Command;
 use std::collections::HashSet;
+use std::fs::File;
+use std::io::Read;
+
 use regex::Regex;
+
+fn fread(fname: &str) -> String {
+    let mut f = File::open(fname)
+        .expect(&format!("{} not found", fname));
+    let mut contents = String::new();
+    f.read_to_string(&mut contents)
+        .expect(&format!("Could not read {}", fname));
+    contents
+}
 
 fn man(cmd: &str) -> String {
     String::from_utf8_lossy(&Command::new("man")

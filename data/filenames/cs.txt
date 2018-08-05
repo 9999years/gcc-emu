@@ -1,0 +1,9 @@
+GZipStream
+Deflater
+UnitTests
+Inflater
+AssemblyInfo
+ChecksumImpl
+DotZLib
+CodecBase
+CircularBuffer

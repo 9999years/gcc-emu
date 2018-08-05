@@ -1,0 +1,12 @@
+mkindex
+vperm
+filter_knr2ansi
+extract_symvers
+make_sunver
+gen_includers
+gnathtml
+texi2pod
+gen_bind_includers
+make_exports
+mklog
+make-obstacks-texi

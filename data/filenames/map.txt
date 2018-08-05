@@ -1,0 +1,12 @@
+ssp
+zlib
+libgomp
+libitm
+quadmath
+coi_version_linker_script
+sol2-clearcap
+gfortran
+sol2-clearcapv
+libatomic
+libgccjit
+vms-crtlmap

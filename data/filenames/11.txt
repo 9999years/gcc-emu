@@ -1,0 +1,3 @@
+FSFChangeLog
+i386-solaris
+sparc-solaris
