@@ -44,7 +44,7 @@ fn args(cmd: &str) -> Vec<String> {
 }
 
 // count: the max. number of args; args may be between the range's start and end
-fn gcc_invokation<T: AsRef<str>>(args: &[T], count: Range<usize>) -> String {
+fn gcc_invocation<T: AsRef<str>>(args: &[T], count: Range<usize>) -> String {
     if args.len() == 0 {
         return "gcc".to_string();
     }
@@ -63,6 +63,6 @@ fn gcc_invokation<T: AsRef<str>>(args: &[T], count: Range<usize>) -> String {
 fn main() {
     let args = args("gcc");
     for _ in 0..50 {
-        println!("{}", gcc_invokation(args.as_slice(), 5..20));
+        println!("{}", gcc_invocation(args.as_slice(), 5..20));
     }
 }
