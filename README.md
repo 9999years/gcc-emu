@@ -13,3 +13,19 @@ sample output, printed with a random delay of 0–3 seconds between invocations
     gcc -m3 -munaligned-doubles -mno-compat-align-parm -mno-float128 -mauto-litpools -mcbranch-force-delay-slot -mcorea -mbig-endian -mno-div -symbolic -ftree-copy-prop -mdspr2 -mhard-dfp -mel -Wmain -mfma
     gcc -mfloat32 -- -msse3 -Wpointer-sign -ffinite-math-only -mno-odd-spreg -mno-fsca -m2e -fopt-info-vec-missed -m96bit-long-double -m4-single -mno-vis4
     gcc -mv850es -mno-callgraph-data -mno-dpfp-lrsr -mno-mdmx -mxgot -mno-long-calls -mio-volatile -mlarge-mem -mauto-litpools -fpost-ipa-mem-report -mlong-calls -mno-msa -Wmemset-transposed-args -mno-cond-exec -mpoke-function-name -O1 -Wredundant-decls -mads
+
+prereqs:
+
+* `man`
+* a man page for `gcc` (test: `man gcc`), usually easiest to get by installing
+  gcc (`sudo apt-get install build-essential` in some systems, `gcc-core` on
+  cygwin, etc. etc.)
+
+coming soon:
+
+* a `./configure` stage
+* filenames, generated... somehow? im fine using a corpus or combining name
+  fragments; there’s some in the `data` directory already
+* compilation warnings
+* a link stage
+* an install stage
