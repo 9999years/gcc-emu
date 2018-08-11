@@ -1,10 +1,13 @@
 extern crate regex;
+extern crate rand;
 
 use std::process::Command;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
+use std::ops::Range;
 
+use rand::{thread_rng, Rng};
 use regex::Regex;
 
 fn fread(fname: &str) -> String {
@@ -40,13 +43,26 @@ fn args(cmd: &str) -> Vec<String> {
         .collect::<Vec<String>>()
 }
 
-//fn fake_invocation(cmd: &str, args: Vec<String>) {
-//}
+// count: the max. number of args; args may be between the range's start and end
+fn gcc_invokation<T: AsRef<str>>(args: &[T], count: Range<usize>) -> String {
+    if args.len() == 0 {
+        return "gcc".to_string();
+    }
+
+    let mut ret = Vec::new();
+    ret.push("gcc");
+    ret.reserve(count.end);
+    let mut rng = thread_rng();
+    for _ in 0..(rng.gen_range(count.start, count.end)) {
+        ret.push(rng.choose(args).unwrap().as_ref());
+    }
+
+    return ret.join(" ");
+}
 
 fn main() {
     let args = args("gcc");
-    for arg in &args {
-        println!("{}", arg);
+    for _ in 0..50 {
+        println!("{}", gcc_invokation(args.as_slice(), 5..20));
     }
-    println!("{} args", args.len());
 }

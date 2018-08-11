@@ -5,4 +5,5 @@ authors = ["Rebecca Turner <637275@gmail.com>"]
 
 [dependencies]
 regex = "1"
+rand = "0.5.5"
 toml = "0.4"
