@@ -6,6 +6,8 @@ use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
 use std::ops::Range;
+use std::thread;
+use std::time::Duration;
 
 use rand::{thread_rng, Rng};
 use regex::Regex;
@@ -57,12 +59,17 @@ fn gcc_invocation<T: AsRef<str>>(args: &[T], count: Range<usize>) -> String {
         ret.push(rng.choose(args).unwrap().as_ref());
     }
 
-    return ret.join(" ");
+    ret.join(" ")
+}
+
+fn compilation_time() -> Duration {
+    Duration::new(0, thread_rng().gen_range(0, 3_000_000_000))
 }
 
 fn main() {
     let args = args("gcc");
-    for _ in 0..50 {
+    loop {
         println!("{}", gcc_invocation(args.as_slice(), 5..20));
+        thread::sleep(compilation_time());
     }
 }
