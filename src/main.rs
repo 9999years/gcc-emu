@@ -12,6 +12,9 @@ use std::time::Duration;
 use rand::{thread_rng, Rng};
 use regex::Regex;
 
+const NM_PREFIX_LEN: usize = 19;
+const NM_OFFSET_LEN: usize = 16;
+
 fn fread(fname: &str) -> String {
     let mut f = File::open(fname)
         .expect(&format!("{} not found", fname));
@@ -19,6 +22,27 @@ fn fread(fname: &str) -> String {
     f.read_to_string(&mut contents)
         .expect(&format!("Could not read {}", fname));
     contents
+}
+
+fn libfunctions(library: &str) -> Vec<String> {
+    // nm output is like:
+    // 0000000000000000 T atexit
+    // |<---- 19 chars ->|
+    Command::new("nm")
+        .args(&["-p", library])
+        .output()
+        .expect(&format!("Failed to find library {}", library))
+        .stdout
+        .split(|byte| byte == &b'\n' || byte == &b'\r')
+        // lines at least as long as the "prefix" (see above)
+        .filter(|line| line.len() > NM_PREFIX_LEN)
+        // chop off the hex offset
+        .map(|line| &line[NM_OFFSET_LEN..])
+        // T for text (code) section
+        .filter(|line| line.starts_with(b" T "))
+        // chop off section indicator & make String
+        .map(|line| String::from_utf8_lossy(&line[3..]).into_owned())
+        .collect()
 }
 
 fn man(cmd: &str) -> String {
@@ -45,18 +69,24 @@ fn args(cmd: &str) -> Vec<String> {
         .collect::<Vec<String>>()
 }
 
+fn gcc_invocation() -> String {
+    invocation("gcc", 5..20)
+}
+
 // count: the max. number of args; args may be between the range's start and end
-fn gcc_invocation<T: AsRef<str>>(args: &[T], count: Range<usize>) -> String {
+fn invocation(cmd: &str, count: Range<usize>) -> String {
+    let args = args(cmd);
     if args.len() == 0 {
-        return "gcc".to_string();
+        return cmd.to_string();
     }
 
     let mut ret = Vec::new();
-    ret.push("gcc");
+    ret.push(cmd);
+    // avoid reallocations cause im sure THAT's a huge perf concern
     ret.reserve(count.end);
     let mut rng = thread_rng();
     for _ in 0..(rng.gen_range(count.start, count.end)) {
-        ret.push(rng.choose(args).unwrap().as_ref());
+        ret.push(rng.choose(&args).unwrap().as_ref());
     }
 
     ret.join(" ")
@@ -67,9 +97,12 @@ fn compilation_time() -> Duration {
 }
 
 fn main() {
-    let args = args("gcc");
-    loop {
-        println!("{}", gcc_invocation(args.as_slice(), 5..20));
-        thread::sleep(compilation_time());
+    //loop {
+        //println!("{}", gcc_invocation());
+        //thread::sleep(compilation_time());
+    //}
+    let fns = libfunctions("/lib/libc.a");
+    for libfn in fns {
+        println!("{}", libfn);
     }
 }
