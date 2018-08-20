@@ -1,8 +1,6 @@
 use std::process::Command;
 use std::collections::HashSet;
 use std::ops::Range;
-use std::marker::PhantomData;
-use std::borrow::Borrow;
 
 use rand::{thread_rng, Rng};
 use regex::Regex;
@@ -32,27 +30,25 @@ fn args(cmd: &str) -> Vec<String> {
 }
 
 #[derive(Debug)]
-pub struct Arguments<'a> {
+struct Arguments {
     cmd: String,
     args: Vec<String>,
-    _phantom: PhantomData<&'a ()>,
 }
 
-impl<'a> Arguments<'a> {
+impl Arguments {
     pub fn new(cmd: &str) -> Arguments {
         Arguments {
             cmd: cmd.to_string(),
             args: args(cmd),
-            _phantom: PhantomData,
         }
     }
 }
 
-impl<'a> Iterator for Arguments<'a> {
-    type Item = &'a str;
-    fn next(&mut self) -> Option<&'a str> {
+impl Iterator for Arguments {
+    type Item = String;
+    fn next(&mut self) -> Option<Self::Item> {
         thread_rng().choose(self.args.as_slice())
-            .map(String::as_ref)
+            .map(String::clone)
     }
 }
 
@@ -68,12 +64,12 @@ fn invocation(cmd: &str, count: Range<usize>) -> String {
     }
 
     let mut ret = Vec::new();
-    ret.push(cmd);
+    ret.push(String::from(cmd));
     // avoid reallocations cause im sure THAT's a huge perf concern
     ret.reserve(count.end);
-    ret.extend(args
-            .map(|a| a.borrow())
-            .take(thread_rng().gen_range(count.start, count.end)));
+    let iter = args
+        .take(thread_rng().gen_range(count.start, count.end));
+    ret.extend(iter);
 
     ret.join(" ")
 }
